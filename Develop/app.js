@@ -1,3 +1,4 @@
+const Employee = require("./lib/Employee");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
@@ -13,7 +14,66 @@ const render = require("./lib/htmlRenderer");
 ​
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-​
+​const employeeQuestions = [
+    "What is the employee's name?",
+    "What is the employee's ID?",
+    "What is the employee's email?",
+    "What is the employee's role?"
+]
+
+let employeePrompts = [
+    { type: "input",
+      message: employeeQuestions[0],
+      name: "name"
+    },
+    { type: "input",
+      message: employeeQuestions[1],
+      name: "id"
+    },
+    { type: "input",
+      message: employeeQuestions[2],
+      name: "email",
+      validate: function ValidateEmail(email) {
+      var check = email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+        if (check) {
+          return (true)
+        }
+          alert("Your email address is invalid!")
+          return (false)
+      }
+    },
+    { type: "list",
+      message: employeeQuestions[3],
+      name: "role",
+      choices: ["Manager", "Engineer", "Intern"]
+    }
+];
+
+let managerPrompt = {
+    type: "input",
+    message: "Enter the manager's office number: ",
+    name: "office-number"
+}
+
+let engineerPrompt = {
+    type: "input",
+    message: "Enter the engineer's GitHub username: ",
+    name: "github"
+}
+
+let internPrompt = {
+    type: "input",
+    message: "Enter the intern's school: ",
+    name: "school"
+}
+
+inquirer
+.prompt(employeePrompts)
+.then(response => {
+
+})
+
+
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
